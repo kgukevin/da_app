@@ -1,8 +1,23 @@
 <body>
 <div style="height: 100vh; width: 100vw;">
   <div style="margin-top: 50vh" align="center">
-    <input type="text" [(ngModel)]="inputText">
+<!--    <input type="text" [(ngModel)]="inputText">-->
     <button (click)="takeInput()"> enter </button>
+<!--    <label [textContent]="inputText"></label>-->
+    <table id="weather">
+      <tr>
+        <th *ngFor="let column of headers">
+          {{column}}
+        </th>
+      </tr>
+
+      <tr *ngFor="let row of weather">
+        <td *ngFor="let col of headers">
+          {{row[col]}}
+        </td>
+      </tr>
+
+    </table>
   </div>
 </div>
 </body>

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {RestService} from './rest.service';
+import {Weather} from '../../Weather';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +11,24 @@ export class AppComponent {
   title = 'da-app';
 
   inputText = '';
-  
-  takeInput() {
 
+  constructor(private rs: RestService) {
   }
 
+  headers = ['day', 'temperature', 'windspeed', 'event'];
+
+  weather: Weather[] = [];
+
+  takeInput() {
+    this.rs.readWeather()
+      .subscribe
+      (
+        (response) => {
+          this.weather = response[0]['data'];
+        },
+        (error) => {
+          console.log('No Data Found' + error);
+        }
+      );
+  }
 }
