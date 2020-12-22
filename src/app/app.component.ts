@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {RestService} from './rest.service';
-import {Weather} from '../../Weather';
+import {Report} from '../../Report';
 
 @Component({
   selector: 'app-root',
@@ -15,16 +15,36 @@ export class AppComponent {
   constructor(private rs: RestService) {
   }
 
-  headers = ['day', 'temperature', 'windspeed', 'event'];
+  headers = [];
 
-  weather: Weather[] = [];
+  report: Report[] = [];
 
-  takeInput() {
+  score: number;
+
+  showData() {
     this.rs.readWeather()
       .subscribe
       (
         (response) => {
-          this.weather = response[0]['data'];
+          this.report = response;
+          console.log(this.report);
+          this.headers.length = 0;
+          for (const category in this.report[0]) {
+            this.headers.push(category);
+          }
+        },
+        (error) => {
+          console.log('No Data Found' + error);
+        }
+      );
+  }
+
+  calculate() {
+    this.rs.calculateScore()
+      .subscribe
+      (
+        (response) => {
+          this.score = +response;
         },
         (error) => {
           console.log('No Data Found' + error);
