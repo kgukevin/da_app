@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {RestService} from './rest.service';
 import {Report} from '../../Report';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,6 +12,8 @@ export class AppComponent {
   title = 'da-app';
 
   inputText = '';
+
+  topics = ['Angular', 'React', 'Vue'];
 
   constructor(private rs: RestService) {
   }

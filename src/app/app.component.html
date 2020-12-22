@@ -1,9 +1,93 @@
 <body>
 <div style="height: 100vh; width: 100vw;">
   <div style="margin-top: 50vh" align="center">
-<!--    <input type="text" [(ngModel)]="inputText">-->
-    <button (click)="showData()"> data </button>
-<!--    <label [textContent]="inputText"></label>-->
+
+    <!--    <button (click)="loadData()">load</button>-->
+    <!--    <table>-->
+    <!--      <tr>-->
+    <!--        <th *ngFor="let column of headers">-->
+    <!--          {{column}}-->
+    <!--        </th>-->
+    <!--      </tr>-->
+
+    <!--      <tr *ngFor="let row of report" style="padding-left: 100px">-->
+    <!--        <td *ngFor="let col of headers">-->
+    <!--          <input type="text" [(ngModel)]="inputText">-->
+    <!--        </td>-->
+    <!--      </tr>-->
+    <!--    </table>-->
+    <div class="container-fluid">
+      {{ userForm.value | json }}
+      <h1>score report form</h1>
+      <form #userForm="ngForm">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" class="form-control" ngModel name="userName">
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" ngModel name="email">
+        </div>
+
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" class="form-control" ngModel name="phone">
+        </div>
+
+        <div ngModelGroup="address">
+          <div class="form-group">
+            <label>Street</label>
+            <input type="text" class="form-control" ngModel name="street">
+          </div>
+
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" class="form-control" ngModel name="city">
+          </div>
+
+          <div class="form-group">
+            <label>State</label>
+            <input type="text" class="form-control" ngModel name="state">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <select class="custom-select" ngModel name="topic">
+            <option selected>I am interested in</option>
+            <option *ngFor="let topic of topics">{{topic}}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label> Time preference </label>
+          <div class="form-check">
+            <input class="form-check-input" ngModel type="radio" name="timePreference" value="morning" >
+            <label class="form-check-label">Morning (9AM - 12PM)</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" ngModel type="radio" name="timePreference" value="evening" >
+            <label class="form-check-label">Evening (5PM - 8PM)</label>
+          </div>
+        </div>
+
+        <div class="formcheck mb-3">
+          <input class="form-check-input" ngModel type="checkbox" name="subscribe">
+          <label class="form-check-label">
+            Send me promotional offers
+          </label>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Submit form</button>
+
+      </form>
+
+    </div>
+
+
+    <!--    <input type="text" [(ngModel)]="inputText">-->
+    <button (click)="showData()"> data</button>
+    <!--    <label [textContent]="inputText"></label>-->
     <table id="report">
       <tr>
         <th *ngFor="let column of headers">
@@ -13,13 +97,13 @@
 
       <tr *ngFor="let row of report" style="padding-left: 100px">
         <td *ngFor="let col of headers">
-          {{row[col]}}
+          {{row[col] | json}}
         </td>
       </tr>
 
     </table>
 
-    <button (click)="calculate()"> calculate </button>
+    <button (click)="calculate()"> calculate</button>
     <div [textContent]="score"></div>
 
   </div>
