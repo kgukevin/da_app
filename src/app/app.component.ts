@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {RestService} from './rest.service';
 import {Report} from '../../Report';
 
@@ -11,7 +11,7 @@ import {Report} from '../../Report';
 export class AppComponent {
   title = 'da-app';
 
-  inputText = '';
+  @ViewChild('userForm') userModel: any;
 
   topics = ['Angular', 'React', 'Vue'];
 
@@ -21,6 +21,8 @@ export class AppComponent {
   headers = [];
 
   report: Report[] = [];
+
+  report1: JSON;
 
   score: number;
 
@@ -54,4 +56,9 @@ export class AppComponent {
         }
       );
   }
+
+  loadData() {
+    this.rs.updateWeather(this.userModel.value).subscribe();
+  }
+
 }

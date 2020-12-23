@@ -19,7 +19,7 @@
     <div class="container-fluid">
       {{ userForm.value | json }}
       <h1>score report form</h1>
-      <form #userForm="ngForm">
+      <form #userForm="ngForm" [(ngModel)]="userModel" ngModelOptions="standalone">
         <div class="form-group">
           <label>Name</label>
           <input type="text" class="form-control" ngModel name="userName">
@@ -78,7 +78,7 @@
           </label>
         </div>
 
-        <button class="btn btn-primary" type="submit">Submit form</button>
+        <button class="btn btn-primary" type="submit" (click)="loadData()">Submit form</button>
 
       </form>
 
