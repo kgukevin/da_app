@@ -1,15 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Report} from '../../Report';
-import { HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json'
-  })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +23,7 @@ export class RestService {
 
   updateWeather(report: JSON) {
     console.log(report);
-    return this.http.put<any>(this.inputUrl + JSON.stringify(report), report);
+    return this.http.put<any>(this.inputUrl, report);
   }
 
   calculateScore()

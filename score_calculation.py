@@ -7,7 +7,7 @@ Created on Fri Dec 18 15:22:26 2020
 """
 import json
 
-from flask import Flask;
+from flask import Flask, request;
 from flask_cors import CORS, cross_origin;
 from flask import Flask, jsonify;
 
@@ -71,12 +71,10 @@ def index():
   return weather_report()
 
 
-@app.route("/inputdata/<new_cat>", methods=['PUT'])
+@app.route("/inputdata/", methods=['PUT'])
 @cross_origin(headers=['application/json'])
-def index2(new_cat):
-  print(new_cat)
-  return updateCat(new_cat)
-  # return weather_report()
+def index2():
+  return updateCat(request.get_data())
 
 
 @app.route("/calculator/", methods=['GET'])
