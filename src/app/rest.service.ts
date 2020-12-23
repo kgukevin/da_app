@@ -12,16 +12,16 @@ export class RestService {
   constructor(private http: HttpClient) {
   }
 
-  inputUrl = 'http://127.0.0.1:5000/inputdata/';
-  weatherUrl = 'http://127.0.0.1:5000/weatherReport/';
+  inputUrl = 'http://127.0.0.1:5000/update/';
+  weatherUrl = 'http://127.0.0.1:5000/report/';
   calculatorUrl = 'http://127.0.0.1:5000/calculator/';
 
-  readWeather()
+  readReport()
   {
     return this.http.get<Report[]>(this.weatherUrl);
   }
 
-  updateWeather(report: JSON) {
+  updateReport(report: JSON) {
     console.log(report);
     return this.http.put<any>(this.inputUrl, report);
   }

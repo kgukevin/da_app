@@ -61,17 +61,17 @@ def return_color(color, score):
   return tuple(L)
 
 
-def weather_report():
+def get_report():
   global cat
   return jsonify([cat])
 
 
-@app.route("/weatherReport/", methods=['GET'])
+@app.route("/report/", methods=['GET'])
 def index():
-  return weather_report()
+  return get_report()
 
 
-@app.route("/inputdata/", methods=['PUT'])
+@app.route("/update/", methods=['PUT'])
 @cross_origin(headers=['application/json'])
 def index2():
   return updateCat(request.get_data())

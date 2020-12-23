@@ -22,12 +22,10 @@ export class AppComponent {
 
   report: Report[] = [];
 
-  report1: JSON;
-
   score: number;
 
   showData() {
-    this.rs.readWeather()
+    this.rs.readReport()
       .subscribe
       (
         (response) => {
@@ -58,7 +56,7 @@ export class AppComponent {
   }
 
   loadData() {
-    this.rs.updateWeather(this.userModel.value).subscribe();
+    this.rs.updateReport(this.userModel.value).subscribe();
   }
 
 }
