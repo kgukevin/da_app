@@ -14,15 +14,16 @@ from flask import Flask, jsonify;
 app = Flask(__name__)
 CORS(app)
 
-cat = {'Distractions': [[8, 3, 2, 1, 2, 1], 1 / 3, 10], 'Screen Time': [[2, 4, 2, 4, 1, 1], 1 / 3, 10],
-       'Diet': [[10, 3, 1, 5, 1, 2], 1 / 3, 10]}
+person = {'12-1-2020': {'Distractions': [8, 1 / 3, 10], 'Screen Time': [[2, 4, 2, 4, 1, 1], 1 / 3, 10],
+                        'Diet': [[10, 3, 1, 5, 1, 2], 1 / 3, 10]},
+          'weighting': {'Distractions': (1 / 3, 10), 'Screen Time': (1 / 3, 10), 'Diet': (1 / 3, 10)}}
 
 
-def updateCat(new_cat):
-  global cat
-  temp = json.loads(new_cat)
-  cat = temp
-  return new_cat
+def updateReport(report):
+  global person
+  temp = json.loads(report)
+  person = temp
+  return report
 
 
 def calculate_score(cat, num_days):
@@ -62,8 +63,8 @@ def return_color(color, score):
 
 
 def get_report():
-  global cat
-  return jsonify([cat])
+  global person
+  return jsonify([person])
 
 
 @app.route("/report/", methods=['GET'])
@@ -74,13 +75,13 @@ def index():
 @app.route("/update/", methods=['PUT'])
 @cross_origin(headers=['application/json'])
 def index2():
-  return updateCat(request.get_data())
+  return updateReport(request.get_data())
 
 
 @app.route("/calculator/", methods=['GET'])
 def index3():
-  global cat
-  return calculate_score(cat, 6)
+  global person
+  return calculate_score(person, 6)
 
 
 if __name__ == '__main__':
