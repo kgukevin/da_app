@@ -14,9 +14,8 @@ from flask import Flask, jsonify;
 app = Flask(__name__)
 CORS(app)
 
-person = {'12-1-2020': {'Distractions': [8, 1 / 3, 10], 'Screen Time': [[2, 4, 2, 4, 1, 1], 1 / 3, 10],
-                        'Diet': [[10, 3, 1, 5, 1, 2], 1 / 3, 10]},
-          'weighting': {'Distractions': (1 / 3, 10), 'Screen Time': (1 / 3, 10), 'Diet': (1 / 3, 10)}}
+person = {'12-01-2020': {'Distractions': [10, 10, 1 / 3, False], 'Screen Time': [0, 24, 1 / 3, True],
+                         'Diet': [10, 10, 1 / 3, False]}}
 
 
 def updateReport(report):
@@ -26,30 +25,37 @@ def updateReport(report):
   return report
 
 
-def calculate_score(cat, num_days):
+def calculate_daily_score(report, date):
   '''
-    cat: Dictionary mapping category to [[list of scores],weight,max]
-    num_days: Integer describing number of days
+    report: Nested dictionary mapping date to category to [rating, max, weight]
+    date: String date formatted as mm-dd-yyyy
     '''
-  assert sum([len(cat[x][0]) == num_days for x in cat]) == len(cat)
+  assert date in report.keys()
+  score = 0
+  for category in report[date].keys():
+    data = report[date][category]
+    rating = data[0]
+    scale = data[1]
+    weight = data[2]
+    inverted = data[3]
+    if inverted:
+      score += (1 - rating / scale) * weight
+    else:
+      score += rating / scale * weight
+  return str(score)
 
-  scores = 0
-  for day in range(num_days):
-    scores += calculate_daily_score([cat[x][0][day] for x in cat], [cat[x][1] for x in cat], [cat[x][2] for x in cat])
-  return str(scores / num_days)
 
-
-def calculate_daily_score(ratings, weight, maxes):
-  '''
-    Ratings: list of scores per category
-    Maxes: list of maxes per category
-    Weight: list of weights per category
-
-    Returns: score for one day
-    '''
-  assert len(ratings) == len(maxes) == len(weight), 'Length incompatible'
-
-  return sum([ratings[i] / maxes[i] * weight[i] for i in range(len(ratings))])
+# def calculate_daily_score(ratings, weight, maxes):
+#   '''
+#     Ratings: list of scores per category
+#     Maxes: list of maxes per category
+#     Weight: list of weights per category
+#
+#     Returns: score for one day
+#     '''
+#   assert len(ratings) == len(maxes) == len(weight), 'Length incompatible'
+#
+#   return sum([ratings[i] / maxes[i] * weight[i] for i in range(len(ratings))])
 
 
 # mixed colors later
@@ -81,7 +87,7 @@ def index2():
 @app.route("/calculator/", methods=['GET'])
 def index3():
   global person
-  return calculate_score(person, 6)
+  return calculate_daily_score(person, '12-01-2020')
 
 
 if __name__ == '__main__':

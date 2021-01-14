@@ -13,12 +13,12 @@ export class RestService {
   }
 
   inputUrl = 'http://127.0.0.1:5000/update/';
-  weatherUrl = 'http://127.0.0.1:5000/report/';
+  reportUrl = 'http://127.0.0.1:5000/report/';
   calculatorUrl = 'http://127.0.0.1:5000/calculator/';
 
   readReport()
   {
-    return this.http.get<Report[]>(this.weatherUrl);
+    return this.http.get<Report[]>(this.reportUrl);
   }
 
   updateReport(report: JSON) {
